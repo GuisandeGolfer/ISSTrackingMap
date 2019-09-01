@@ -1,0 +1,17 @@
+button {
+  margin: 10px 5px;
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: center;
+}
+
+.HUD {
+  display: flex;
+  flex-direction: column;
+  margin-left: 45%;
+}
+/* 
+  Going to be adding more styling for my next version update. 
+*/

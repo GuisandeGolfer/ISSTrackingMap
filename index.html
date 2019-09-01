@@ -1,107 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>JSON Data : 1.4 Working with Data and API's</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="assets/CSS/app.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    />
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
     <style>
-        #ISSmap {
-            height: 360px;
-        }
+      #ISSmap {
+        height: 360px;
+        width: 60%;
+        margin-left: 15%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <h1>Where is the ISS?</h1>
+  <body>
+    <div class="HUD">
+      <h1>Where is the ISS?</h1>
 
-    <p>
-        latitude: <span id="lat"></span>
-        longitude: <span id="long"></span>
-        altitude: <span id="altitude"></span> miles
-    </p>
+      <p>
+        latitude: <span id="lat"></span> longitude:
+        <span id="long"></span> altitude: <span id="altitude"></span> miles
+      </p>
+    </div>
 
+    <div class="buttonSection">
+      <button class="citybutton">London</button>
+      <button class="citybutton">Paris</button>
+      <button class="citybutton">Dubai</button>
+      <button class="citybutton">San Francisco</button>
+
+      <button id="world">World View</button>
+      <button id="ISS">International Space Station</button>
+    </div>
     <div id="ISSmap"></div>
 
-    <script>
-        const attribution =
-            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-        const URL_Template = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}';
-
-        const map = L.map('ISSmap', {
-            center: [0, 0],
-            zoom: 1
-        });
-        const tiles = L.tileLayer(URL_Template, {
-            foo: 'bar',
-            attribution: attribution
-        }).addTo(map);
-
-
-        const ISSIcon = L.icon({
-            iconUrl: 'assets/ISS.svg',
-            iconSize: [50, 32],
-            iconAnchor: [25, 16],
-            shadowURL: 'assets/shadow.jpg',
-            shadowSize: [68, 95],
-            shadowAnchor: [22, 94]
-        });
-
-        const marker = L.marker([0, 0], {
-            icon: ISSIcon
-        }).addTo(map);
-
-
-        /*
-        
-        Exercises to Do: 
-            1. Play around with the shadow settings for the icon
-            2. Change the size of the icon relative to the map's zoom level
-            3. use Mappa.js to draw on top of the map using p5 JS
-                a. Watch the coding challenge visualizing 500,000 subscribers
-        
-        */
-
-
-
-        const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
-
-        let isFirst = true;
-
-        async function grabISS() {
-            const response = await fetch(api_url);
-            const data = await response.json();
-            const {
-                latitude,
-                longitude,
-                altitude
-            } = data;
-
-            const aspect = 1.5625;
-            const w = (altitude * aspect) / 10;
-            const h = altitude / 10;
-            ISSIcon.options.iconSize = [w, h];
-            ISSIcon.options.iconAnchor = [w / 2, h / 2];
-
-
-            // L.marker([latitude, longitude]).addTo(map);
-            marker.setLatLng([latitude, longitude]);
-            if (isFirst) {
-                map.setView([latitude, longitude], 2);
-                isFirst = false;
-            }
-
-            document.getElementById('lat').textContent = latitude.toFixed(2);
-            document.getElementById('long').textContent = longitude.toFixed(2);
-            document.getElementById('altitude').textContent = altitude.toFixed(2);
-        }
-        grabISS();
-
-        setInterval(grabISS, 2000);
-    </script>
-</body>
-
+    <script src="assets/JS/app.js"></script>
+  </body>
 </html>
