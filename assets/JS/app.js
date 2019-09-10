@@ -24,16 +24,17 @@ const tiles = L.tileLayer(URL_Template, {
 //Button EventListeners ============
 
 document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".citybutton");
+  const buttons = document.querySelectorAll("button[alt='city']");
+  console.log(buttons);
   buttons.forEach(button => {
     button.addEventListener("click", function() {
       snapToCity(button.innerHTML);
     });
   });
-  const worldView = document.querySelector("#world");
+  const worldView = document.querySelector("button[alt='WorldView']");
   worldView.addEventListener("click", () => map.fitWorld().zoomIn(2));
 
-  const ISS = document.querySelector("#ISS");
+  const ISS = document.querySelector("button[alt='ISS']");
   ISS.addEventListener("click", () => {
     if (map.getZoom() > 6) {
       map.setZoom(4);
@@ -83,7 +84,7 @@ let snapToCity = city => {
       break;
 
     default:
-      alert("Sorry Something is wrong with our buttons");
+      alert("debug 1");
       break;
   }
 };
